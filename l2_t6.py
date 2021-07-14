@@ -5,7 +5,7 @@ import random, sys
 
 hidden_number = random.randint(0, 100)
 print(hidden_number)
-print("Программа загадала число, попробуйте его отгада с подсказками")
+print("Программа загадала число, попробуйте его отгадать с подсказками")
 number = int(input("Введите натуральное число - "))
 
 for i in range(1, 10):
