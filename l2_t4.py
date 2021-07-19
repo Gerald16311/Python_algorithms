@@ -3,7 +3,9 @@
 n = int(input("Введите число n - "))
 number = 1
 result = 1
-for i in range(1,n,1):
+for i in range(1, n, 1):
     number = number / (-2)
     result += number
 print(f"сумма элементов заданного ряда = {result}")
+
+# с помошью рекурсии

@@ -4,7 +4,9 @@
 number = str(int(input("Введите натуральное число - ")))
 
 result = ""
-for i in range(len(number),0,-1):
-    result += number[i-1]
+for i in range(len(number), 0, -1):
+    result += number[i - 1]
 
 print(f"Результат - {result}")
+
+# с помошью рекурсии
