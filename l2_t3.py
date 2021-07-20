@@ -3,10 +3,24 @@
 
 number = str(int(input("Введите натуральное число - ")))
 
-result = ""
-for i in range(len(number), 0, -1):
-    result += number[i - 1]
 
-print(f"Результат - {result}")
+# 1 вариант решения через цикл
+# result = ""
+# for i in range(len(number), 0, -1):
+#     result += number[i - 1]
+#
+# print(f"Результат - {result}")
 
-# с помошью рекурсии
+# 2 вариант через срез
+# result = number [::-1]
+# print(f"Результат - {result}")
+
+# 3 вариант с помошью рекурсии
+def recursion(n):
+    if len(str(n)) == 1:
+        return str(n)
+    else:
+        return str(n % 10) + str(recursion(n // 10))
+
+
+print(recursion(int(number)))
