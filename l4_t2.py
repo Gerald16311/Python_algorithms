@@ -10,6 +10,7 @@ n = 15
 
 
 # Без использования «Решета Эратосфена»;
+# Специально написал самый медленный алгоритм, с 2мя циклами
 def no_eratosthenes(number):
     result_list = []
     while len(result_list) < number:
@@ -32,8 +33,7 @@ def main_no_eratosthenes():
 
 
 print(f'простое число под номером {n} = {no_eratosthenes(n)} (без использования решетки эрастофена')
-print(
-    f'время затраченное на 1000 вызовов без использования решетки эрастофена - {timeit.timeit(f"no_eratosthenes({n})", globals=globals(), number=1000)}')
+print(f'время затраченное на 1000 вызовов без использования решетки эрастофена - {timeit.timeit(f"no_eratosthenes({n})", globals=globals(), number=1000)}')
 print('1000 вызовов для просмотра пролайфера')
 cProfile.run('main_no_eratosthenes()')
 # простое число под номером 15 = 47 (без использования решетки эрастофена
@@ -67,12 +67,6 @@ def eratosthenes(number):
         prime = min(sieve)
         result_list.append(prime)
         sieve -= set(range(prime, number * number + 1, prime))
-
-    # for i in numbers_list:
-    #     for j in numbers_list:
-    #         if j % i == 0 and i != j:
-    #             numbers_list.pop(numbers_list.index(j))
-
     return result_list[number - 1]
 
 
@@ -82,8 +76,7 @@ def main_eratosthenes():
 
 
 print(f'простое число под номером {n} = {eratosthenes(n)} (с использованием решетки эрастофена)')
-print(
-    f'время затраченное на 1000 вызовов без использования решетки эрастофена - {timeit.timeit(f"eratosthenes({n})", globals=globals(), number=1000)}')
+print(f'время затраченное на 1000 вызовов без использования решетки эрастофена - {timeit.timeit(f"eratosthenes({n})", globals=globals(), number=1000)}')
 print('1000 вызовов для просмотра пролайфера')
 cProfile.run('main_eratosthenes()')
 # простое число под номером 15 = 47 (с использованием решетки эрастофена)
@@ -101,3 +94,40 @@ cProfile.run('main_eratosthenes()')
 #     48000    0.032    0.000    0.032    0.000 {built-in method builtins.min}
 #     48000    0.003    0.000    0.003    0.000 {method 'append' of 'list' objects}
 #         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
+def eratosthenes2(number):
+    # вариант решето эрастофена, но не полный алгоритм + использование затратной операции pop
+    numbers_list = [i for i in range(2, number * number)]
+    for i in numbers_list:
+        for j in numbers_list:
+            if j % i == 0 and i != j:
+                numbers_list.pop(numbers_list.index(j))
+    return numbers_list[number - 1]
+
+
+def main_eratosthenes2():
+    for _ in range(1000):
+        eratosthenes2(n)
+
+
+print(f'простое число под номером {n} = {eratosthenes2(n)} (с использованием решетки эрастофена)')
+print(f'время затраченное на 1000 вызовов без использования решетки эрастофена - {timeit.timeit(f"eratosthenes2({n})", globals=globals(), number=1000)}')
+print('1000 вызовов для просмотра пролайфера')
+cProfile.run('main_eratosthenes2()')
+# простое число под номером 15 = 47 (с использованием решетки эрастофена)
+# время затраченное на 1000 вызовов без использования решетки эрастофена - 0.17595340000000004
+# 1000 вызовов для просмотра пролайфера
+#          352004 function calls in 0.219 seconds
+#
+#    Ordered by: standard name
+#
+#    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+#         1    0.000    0.000    0.218    0.218 <string>:1(<module>)
+#      1000    0.118    0.000    0.218    0.000 l4_t2.py:101(eratosthenes2)
+#      1000    0.004    0.000    0.004    0.000 l4_t2.py:103(<listcomp>)
+#         1    0.000    0.000    0.218    0.218 l4_t2.py:111(main_eratosthenes2)
+#         1    0.000    0.000    0.219    0.219 {built-in method builtins.exec}
+#         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+#    175000    0.078    0.000    0.078    0.000 {method 'index' of 'list' objects}
+#    175000    0.019    0.000    0.019    0.000 {method 'pop' of 'list' objects}
