@@ -37,32 +37,43 @@ print(
 print('1000 вызовов для просмотра пролайфера')
 cProfile.run('main_no_eratosthenes()')
 # простое число под номером 15 = 47 (без использования решетки эрастофена
-# время затраченное на 1000 вызовов без использования решетки эрастофена - 0.6509629
+# время затраченное на 1000 вызовов без использования решетки эрастофена - 0.7255193999999999
 # 1000 вызовов для просмотра пролайфера
-#          51004 function calls in 0.661 seconds
+#          51004 function calls in 0.648 seconds
 #
 #    Ordered by: standard name
 #
 #    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-#         1    0.000    0.000    0.661    0.661 <string>:1(<module>)
-#      1000    0.658    0.001    0.661    0.001 l4_t2.py:13(no_eratosthenes)
-#         1    0.000    0.000    0.661    0.661 l4_t2.py:29(main_no_eratosthenes)
-#         1    0.000    0.000    0.661    0.661 {built-in method builtins.exec}
+#         1    0.000    0.000    0.648    0.648 <string>:1(<module>)
+#      1000    0.645    0.001    0.648    0.001 l4_t2.py:13(no_eratosthenes)
+#         1    0.000    0.000    0.648    0.648 l4_t2.py:29(main_no_eratosthenes)
+#         1    0.000    0.000    0.648    0.648 {built-in method builtins.exec}
 #      2000    0.000    0.000    0.000    0.000 {built-in method builtins.len}
 #     48000    0.003    0.000    0.003    0.000 {method 'append' of 'list' objects}
 #         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
 
 
 # Используя алгоритм «Решето Эратосфена»
+# 1. Выписать все целые числа 2,...,N.
+# 2. Пусть переменная p изначально равна двум — первому простому числу.
+# 3. Зачеркнуть в списке числа от 2p до n считая шагами по p (это будут числа кратные p: 2p, 3p, 4p, …)
+# 4. Найти первое незачёркнутое число в списке, большее чем p, и присвоить значению переменной p это число.
+# 5. Повторять шаги 3 и 4, пока возможно.
+
 def eratosthenes(number):
-    numbers_list = [i for i in range(2, number * number)]
+    sieve = set(range(2, number * number))
+    result_list = []
+    while sieve:
+        prime = min(sieve)
+        result_list.append(prime)
+        sieve -= set(range(prime, number * number + 1, prime))
 
-    for i in numbers_list:
-        for j in numbers_list:
-            if j % i == 0 and i != j:
-                numbers_list.pop(numbers_list.index(j))
+    # for i in numbers_list:
+    #     for j in numbers_list:
+    #         if j % i == 0 and i != j:
+    #             numbers_list.pop(numbers_list.index(j))
 
-    return numbers_list[number - 1]
+    return result_list[number - 1]
 
 
 def main_eratosthenes():
@@ -76,18 +87,17 @@ print(
 print('1000 вызовов для просмотра пролайфера')
 cProfile.run('main_eratosthenes()')
 # простое число под номером 15 = 47 (с использованием решетки эрастофена)
-# время затраченное на 1000 вызовов без использования решетки эрастофена - 0.1492388
+# время затраченное на 1000 вызовов без использования решетки эрастофена - 0.05802850000000004
 # 1000 вызовов для просмотра пролайфера
-#          352004 function calls in 0.199 seconds
+#          97004 function calls in 0.069 seconds
 #
 #    Ordered by: standard name
 #
 #    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-#         1    0.000    0.000    0.199    0.199 <string>:1(<module>)
-#      1000    0.098    0.000    0.198    0.000 l4_t2.py:41(eratosthenes)
-#      1000    0.004    0.000    0.004    0.000 l4_t2.py:42(<listcomp>)
-#         1    0.000    0.000    0.199    0.199 l4_t2.py:52(main_eratosthenes)
-#         1    0.000    0.000    0.199    0.199 {built-in method builtins.exec}
+#         1    0.000    0.000    0.069    0.069 <string>:1(<module>)
+#      1000    0.035    0.000    0.069    0.000 l4_t2.py:63(eratosthenes)
+#         1    0.000    0.000    0.069    0.069 l4_t2.py:79(main_eratosthenes)
+#         1    0.000    0.000    0.069    0.069 {built-in method builtins.exec}
+#     48000    0.032    0.000    0.032    0.000 {built-in method builtins.min}
+#     48000    0.003    0.000    0.003    0.000 {method 'append' of 'list' objects}
 #         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
-#    175000    0.078    0.000    0.078    0.000 {method 'index' of 'list' objects}
-#    175000    0.019    0.000    0.019    0.000 {method 'pop' of 'list' objects}
