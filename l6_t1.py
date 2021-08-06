@@ -2,12 +2,13 @@
 # уроков. Проанализировать результат и определить программы с наиболее эффективным использованием памяти. Примечание:
 # Для анализа возьмите любые 1-3 ваших программы или несколько вариантов кода для одной и той же задачи. Результаты
 # анализа вставьте в виде комментариев к коду. Также укажите в комментариях версию Python и разрядность вашей ОС.
-
+import sys
 
 # Урок 2 задание 3
 
 number = "123456789"
-
+print(f"Объем памяти выделенный под вводную переменную - {sys.getsizeof(number)} байт")
+# Объем памяти выделенный под вводную переменную - 58 байт
 
 # 1 вариант решения через цикл
 def first_result(n):
@@ -17,13 +18,10 @@ def first_result(n):
     return result
 
 
-def main_first_result():
-    for _ in range(1000):
-        first_result(number)
-
-
 print(f"1 Результат (цикл) - {first_result(number)}")
-
+print(f"Размер 1 функции - {sys.getsizeof(first_result)} байт")
+# 1 Результат (цикл) - 987654321
+# Размер 1 функции - 136 байт
 
 # 2 вариант через срез
 def slised(n):
@@ -31,13 +29,10 @@ def slised(n):
     return result
 
 
-def main_slised():
-    for _ in range(1000):
-        slised(number)
-
-
 print(f"2 Результат (срез) - {slised(number)}")
-
+print(f"Размер 2 функции - {sys.getsizeof(slised)} байт")
+# 2 Результат (срез) - 987654321
+# Размер 2 функции - 136 байт
 
 # 3 вариант с помошью рекурсии
 def recursion(n):
@@ -47,9 +42,7 @@ def recursion(n):
         return str(n % 10) + str(recursion(n // 10))
 
 
-def main_recursion():
-    for _ in range(1000):
-        recursion(int(number))
-
-
 print(f"3 Результат (рекурсия)- {recursion(int(number))}")
+print(f"Размер 3 функции - {sys.getsizeof(recursion)} байт")
+# 3 Результат (рекурсия)- 987654321
+# Размер 3 функции - 136 байт
